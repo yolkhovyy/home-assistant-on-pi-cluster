@@ -1,0 +1,76 @@
+version: "3.8"
+
+configs:
+  emqx_conf:
+    file: ./emqx.conf
+
+services:
+  emqx1:
+    image: emqx/emqx:latest
+    configs:
+      - source: emqx_conf
+        target: /opt/emqx/etc/emqx.conf
+        mode: 444
+    ports: 
+      - 31883:1883
+    environment:
+    - "EMQX_NAME=emqx"
+    - "EMQX_HOST=node1.emqx.io"
+    - "EMQX_CLUSTER__DISCOVERY_STRATEGY=static"
+    - "EMQX_CLUSTER__STATIC__SEEDS=[emqx@node1.emqx.io, emqx@node2.emqx.io, emqx@node3.emqx.io, emqx@node4.emqx.io]"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+      placement:
+        constraints:
+          - node.hostname == rpi1
+
+  emqx2:
+    image: emqx/emqx:latest
+    environment:
+    - "EMQX_NAME=emqx"
+    - "EMQX_HOST=node2.emqx.io"
+    - "EMQX_CLUSTER__DISCOVERY_STRATEGY=static"
+    - "EMQX_CLUSTER__STATIC__SEEDS=[emqx@node1.emqx.io, emqx@node2.emqx.io, emqx@node3.emqx.io, emqx@node4.emqx.io]"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+      placement:
+        constraints:
+          - node.hostname == rpi2
+
+  emqx3:
+    image: emqx/emqx:latest
+    environment:
+    - "EMQX_NAME=emqx"
+    - "EMQX_HOST=node3.emqx.io"
+    - "EMQX_CLUSTER__DISCOVERY_STRATEGY=static"
+    - "EMQX_CLUSTER__STATIC__SEEDS=[emqx@node1.emqx.io, emqx@node2.emqx.io, emqx@node3.emqx.io, emqx@node4.emqx.io]"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+      placement:
+        constraints:
+          - node.hostname == rpi3
+
+  emqx4:
+    image: emqx/emqx:latest
+    environment:
+    - "EMQX_NAME=emqx"
+    - "EMQX_HOST=node4.emqx.io"
+    - "EMQX_CLUSTER__DISCOVERY_STRATEGY=static"
+    - "EMQX_CLUSTER__STATIC__SEEDS=[emqx@node1.emqx.io, emqx@node2.emqx.io, emqx@node3.emqx.io, emqx@node4.emqx.io]"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+      placement:
+        constraints:
+          - node.hostname == rpi4
