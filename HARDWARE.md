@@ -17,7 +17,7 @@ static routers=192.168.1.1
 static domain_name_servers=8.8.8.8 8.8.4.4
 ```
 
-## Router
+## Ethernet Switch
 
 Using TP-Link 8-port Gigabit Desktop Switch.
 
