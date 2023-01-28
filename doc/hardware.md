@@ -1,6 +1,9 @@
 # Hardware
 
-This instructions are for Linux.
+These instructions are for Linux.
+
+<img src="pi-cluster.jpg" width=300>
+
 ## Raspberry Pi
 
 * Raspberry Pi 3 or 4 with 64-bit Raspbian OS
@@ -12,6 +15,7 @@ This instructions are for Linux.
   * Choose Raspberry Pi OS Lite (64-bit)
   * Choose your card
   * Do not change anything else - it will be configured later
+  * Click the `Write` button
 
 **Further in the text X means node number**
 
@@ -72,15 +76,13 @@ This instructions are for Linux.
 
 **/media/${USER}/rootfs/etc/fstab**
 
-This saves the SD card from wearing.
+This reduces SD card wearing.
 
     ```conf
     tmpfs /tmp tmpfs     defaults,noatime,nosuid,nodev,noexec,mode=0755,size=100m 0 0
     tmpfs /var/tmp tmpfs defaults,noatime,nosuid,nodev,noexec,mode=0755,size=30m 0 0
     tmpfs /var/log tmpfs defaults,noatime,nosuid,nodev,noexec,mode=0755,size=100m 0 0
     ```
-
-**Install the SD cards in PIs and boot**
 
 **Optional: remove old ssh keys**
 
@@ -105,14 +107,6 @@ On your PC:
     Your public key has been saved in /home/yo/.ssh/id_rpi.pub.
     ```
 
-**Copy keys to Pis**
-
-On your PC, copy the key to all nodes:
-
-    ```bash
-    ssh-copy-id -i ~/.ssh/id_rpi.pub pi@rpiX
-    ```
-
 **~/.ssh/config**
 
 On your PC for all nodes:
@@ -131,20 +125,40 @@ Restart ssh service on your PC:
     sudo service ssh restart
     ```
 
+**Install the SD cards in PIs and boot**
+
+**Copy keys to PIs**
+
+On your PC, copy the key to all nodes:
+
+    ```bash
+    ssh-copy-id -i ~/.ssh/id_rpi.pub pi@rpiX
+    ```
+
+**Now you should be able to ssh in your PIs**
+
+    ```bash
+    ssh rpiX
+    ```
+
+See [doc/docker-swarm.m](docker-swarm.md#docker-swarm) how to install docker and configure a docker swarm.
 ## Ethernet Switch
 
 * TP-Link 8-port Gigabit Desktop Switch
 
-## Zigbee
+<img src="switch.jpg" width=300>
 
-### C2531 coordinator installation
+## Zigbee
 
 [CC2531](https://www.ti.com/product/CC2531) is used as a coordinator.
 
+### C2531 coordinator installation
+
+<img src="cc2531.jpg" width=300>
+
 #### How to flash CC2531 USB stick
 
-* Compiled from [here](https://www.zigbee2mqtt.io/guide/adapters/flashing/alternative_flashing_methods.html)
-* and [here](https://lemariva.com/blog/2019/08/zigbee-flashing-cc2531-using-raspberry-pi-without-cc-debugger)
+* Compiled from [here](https://www.zigbee2mqtt.io/guide/adapters/flashing/alternative_flashing_methods.html) and [here](https://lemariva.com/blog/2019/08/zigbee-flashing-cc2531-using-raspberry-pi-without-cc-debugger)
 
 On rpi2:
 
