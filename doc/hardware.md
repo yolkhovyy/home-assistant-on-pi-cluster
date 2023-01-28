@@ -1,36 +1,55 @@
 # Hardware
 
+This instructions are for Linux.
 ## Raspberry Pi
 
 * Raspberry Pi 3 or 4 with 64-bit Raspbian OS
-* Use [RPi Imager](https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up/2) to prepare SD card 
+* Use [RPi Imager](https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up/2) to prepare SD card
+  * The RPi Imager has to be started as root:
+    ```bash
+    sudo rpi-imager
+    ```  
+  * Choose Raspberry Pi OS Lite (64-bit)
+  * Choose your card
+  * Do not change anything else - it will be configured later
 
-**Further X means node number**
+**Further in the text X means node number**
 
 * rpiX: replace X by node number
 * 192.168.1.1X: replace X by node number
 
-**Enable ssh, set username/password on OS 64**
+**Enable ssh**
 
     ```bash
-    sudo touch /media/yo/boot/ssh
-    echo YOUR_PASSWORD | openssl passwd -6 -stdin > /media/yo/boot/userconf
-    # Single line, no spaces, crlf at the end
-    # pi:hash
+    sudo touch /media/${USER}/boot/ssh
     ```
 
-**/etc/hostname**
+**Set username/password**
+
+* Generate hash of your password:
+
+    ```bash
+    echo YOUR_PASSWORD | sudo openssl passwd -6 -stdin > /media/${USER}/boot/userconf
+    ```
+
+* Prepend the hash with user name and semicolon (`pi:`) in the `/media/${USER}/boot/userconf` file, a single line, no spaces, crlf at the end:
+
+    ```conf
+    pi:HASH_OF_YOUR_PASSWORD
+
+    ```
+
+**/media/${USER}/rootfs/etc/hostname**
 
     ```conf
     rpiX
     ```
 
-**/etc/hosts**
+**/media/${USER}/rootfs/etc/hosts**
 
     ```conf
-    127.0.0.1 localhost
-    127.0.1.1 rpiX
-    ...
+    127.0.1.1    rpiX
+    
     192.168.1.11 rpi1
     192.168.1.12 rpi2
     192.168.1.13 rpi3
@@ -38,7 +57,7 @@
     192.168.1.14 rpi5
     ```
 
-**/etc/dhcpcd.conf**
+**/media/${USER}/rootfs/etc/dhcpcd.conf**
 
     ```conf
     # Inform the DHCP server of our hostname for DDNS.
@@ -51,7 +70,7 @@
     static domain_name_servers=8.8.8.8 8.8.4.4
     ```
 
-**/etc/fstab**
+**/media/${USER}/rootfs/etc/fstab**
 
 This saves the SD card from wearing.
 
@@ -61,9 +80,9 @@ This saves the SD card from wearing.
     tmpfs /var/log tmpfs defaults,noatime,nosuid,nodev,noexec,mode=0755,size=100m 0 0
     ```
 
-**Install SD cards in PIs, boot**
+**Install the SD cards in PIs and boot**
 
-**Remove old ssh keys**
+**Optional: remove old ssh keys**
 
 On your PC:
 
@@ -86,17 +105,17 @@ On your PC:
     Your public key has been saved in /home/yo/.ssh/id_rpi.pub.
     ```
 
-**Copy key to Pis**
+**Copy keys to Pis**
 
-On your PC, copy teh key to all nodes:
+On your PC, copy the key to all nodes:
 
     ```bash
-    ssh-copy-id -i ~/.ssh/id_rpi pi@rpiX
+    ssh-copy-id -i ~/.ssh/id_rpi.pub pi@rpiX
     ```
 
 **~/.ssh/config**
 
-On your PC:
+On your PC for all nodes:
 
     ```bash
     Host rpiX
