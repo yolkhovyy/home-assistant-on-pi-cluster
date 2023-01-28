@@ -1,5 +1,11 @@
 # MQTT cluster
 
+EMQX MQTT broker is used in cluster mode.
+
+EMQX [License](https://github.com/emqx/emqx/blob/master/lib-ee/BSL.txt)
+
+## EMQX MQTT broker installation
+
 See [docker-compose.yml](../emqx/docker-compose.yml).
 
 ```bash
