@@ -84,7 +84,7 @@ tmpfs /var/tmp tmpfs defaults,noatime,nosuid,nodev,noexec,mode=0755,size=30m 0 0
 tmpfs /var/log tmpfs defaults,noatime,nosuid,nodev,noexec,mode=0755,size=100m 0 0
 ```
 
-**Optional: remove old ssh keys**
+**Remove old ssh keys (optional)**
 
 On your PC:
 

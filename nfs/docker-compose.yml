@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  nfs:
+    image: itsthenetwork/nfs-server-alpine:11-arm
+    container_name: nfs
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - SHARED_DIRECTORY=/data
+    volumes:
+      - /mnt/data/nfs:/data
+    ports:
+      - 12049:2049
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 3s
+      placement:
+        constraints: 
+          - node.hostname == rpi4
