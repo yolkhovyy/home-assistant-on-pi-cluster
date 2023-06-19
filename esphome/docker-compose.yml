@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    privileged: true
+    ports:
+      - 6052:6052
+    volumes:
+      - ./config:/config:rw
+    network_mode: host
+    restart: unless-stopped
+
