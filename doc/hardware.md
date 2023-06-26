@@ -97,6 +97,17 @@ rotate 1
 ...
 ```
 
+*** /etc/logrotate.d/rsyslog***
+
+```conf
+...
+{
+        rotate 1
+        daily
+...
+}
+```
+
 ```bash
 sudo systemctl restart logrotate
 sudo logrotate -v /etc/logrotate.conf
