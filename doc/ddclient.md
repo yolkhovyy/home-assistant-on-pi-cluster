@@ -1,5 +1,7 @@
 # Configure ddclient
 
+Namecheap example, taken from [here](https://www.namecheap.com/support/knowledgebase/article.aspx/583/11/how-do-i-configure-ddclient/).
+
 ## Install ddclient
 
 ```bash
