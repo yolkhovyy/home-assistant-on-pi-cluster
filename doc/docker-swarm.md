@@ -36,3 +36,15 @@ Add all other nodes as managers too:
 ```bash
 docker swarm join --token SWMTKN-1-3m7ipjciqepm36pcxlg2qa71fl70gnbgw3tjl892r11medyxca-88jw3c9tg5r3593vjthnd75y1 192.168.1.11:2377
 ```
+
+## Docker swarm maintenance
+
+### Force new cluster
+
+When the cluster is broken, on a manager where docker is still working:
+
+```bash
+docker swarm init --force-new-cluster
+docker node ls
+```
+

@@ -170,6 +170,16 @@ ssh-copy-id -i ~/.ssh/id_rpi.pub pi@rpiX
 ssh rpiX
 ```
 
+## Restore corrupted SD card
+
+``` bash
+# Find the device name
+sudo fdisk -l
+# E.g. rootfs is on /dev/sdc2
+sudo umount /dev/sdc2
+sudo fsck /dev/sdc2
+ ```
+
 See [doc/docker-swarm.m](docker-swarm.md#docker-swarm) how to install docker and configure a docker swarm.
 ## Ethernet Switch
 
