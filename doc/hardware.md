@@ -259,5 +259,27 @@ sudo apt install python-is-python3
 On rpiX (special adapter usb-ups cabel is required):
 ```bash
 sudo apt install apcupsd
+```
+
+Add
+`ATTR{idVendor}=="051d", ATTR{idProduct}=="0002", MODE="0666"` TO:
+
+* /etc/udev/rules.d/99-apcupsd.rules *
+```bash
+sudo nano /etc/udev/rules.d/99-apcupsd.rules
+sudo udevadm control --reload-rules
+sudo udevadm trigger
 apcaccess status
 ```
+
+* /etc/apcupsd/apcupsd.conf *
+```conf
+UPSTYPE usb
+#DEVICE /dev/ttyS0
+DEVICE
+
+#NISIP 127.0.0.1
+NISIP 0.0.0.0
+```
+
+Add APC UPS integration in Home Assistant.
