@@ -52,8 +52,8 @@ helm repo update
 mkdir -p /mnt/data/hass/helm-charts
 cd /mnt/data/hass/helm-charts
 helm pull k8s-at-home/home-assistant --untar=true
-helm pull k8s-at-home/grafana --untar=true
 helm pull k8s-at-home/node-red --untar=true
+helm pull k8s-at-home/grafana --untar=true
 ```
 
 ### Helm install
@@ -62,4 +62,5 @@ helm pull k8s-at-home/node-red --untar=true
 cd /mnt/data/hass/helm-charts
 helm install home-assistant ./home-assistant
 helm install node-red ./node-red
+helm install grafana ./grafana --set rbac.pspEnabled=false
 ```
