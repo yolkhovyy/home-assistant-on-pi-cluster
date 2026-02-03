@@ -25,7 +25,7 @@ These instructions are for Linux.
 **Enable ssh**
 
 ```bash
-sudo touch /media/${USER}/boot/ssh
+sudo touch /media/${USER}/bootfs/ssh
 ```
 
 **Set username/password**
@@ -33,15 +33,8 @@ sudo touch /media/${USER}/boot/ssh
 * Generate hash of your password:
 
 ```bash
-echo YOUR_PASSWORD | sudo openssl passwd -6 -stdin > /media/${USER}/boot/userconf
+echo pi:$(echo YOUR_PASSWORD | openssl passwd -6 -stdin) | sudo tee /media/${USER}/bootfs/userconf
 ```
-
-* Prepend the hash with user name and semicolon (`pi:`) in the `/media/${USER}/boot/userconf` file, a single line, no spaces, crlf at the end:
-
-    ```conf
-    pi:HASH_OF_YOUR_PASSWORD
-
-    ```
 
 **/media/${USER}/rootfs/etc/hostname**
 
@@ -66,12 +59,21 @@ echo YOUR_PASSWORD | sudo openssl passwd -6 -stdin > /media/${USER}/boot/usercon
 ```conf
 # Inform the DHCP server of our hostname for DDNS.
 hostname rpiX
+
+# Disable Wi-Fi
+dtoverlay=disable-wifi
+
 ...
 # Static IP configuration:
 interface eth0
 static ip_address=192.168.1.1X/24
 static routers=192.168.1.1
 static domain_name_servers=8.8.8.8 8.8.4.4
+```
+
+**/media/${USER}/bootfs/config.txt**
+```conf
+dtoverlay=disable-wifi
 ```
 
 **/media/${USER}/rootfs/etc/fstab**

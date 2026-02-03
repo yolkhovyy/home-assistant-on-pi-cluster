@@ -21,7 +21,8 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ### Persistent volumes
 
 ```bash
-cd manifests/
+mkdir -p /mnt/data/hass/manifests
+cd /mnt/data/hass/manifests
 kubectl apply -f pvc-influxdb.yaml
 kubectl apply -f pvc-grafana.yaml
 kubectl apply -f pvc-node-red.yaml
@@ -48,13 +49,17 @@ helm repo update
 ### Helm charts
 
 ```bash
-mkdir - hass/helm-charts
-cd hass/helm-charts 
+mkdir -p /mnt/data/hass/helm-charts
+cd /mnt/data/hass/helm-charts
 helm pull k8s-at-home/home-assistant --untar=true
 helm pull k8s-at-home/grafana --untar=true
 helm pull k8s-at-home/node-red --untar=true
 ```
 
-### Helm values
+### Helm install
 
 ```bash
+cd /mnt/data/hass/helm-charts
+helm install home-assistant ./home-assistant
+helm install node-red ./node-red
+```
