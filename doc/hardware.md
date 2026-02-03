@@ -255,3 +255,9 @@ Flashing
 sudo apt install python-is-python3
 ~/.arduino15/packages/esp32/tools/esptool_py/3.3.0/esptool.py --before default_reset --after hard_reset --baud 115200 --port /dev/ttyUSB0 --chip esp8266 write_flash -z --flash_size detect 0x0 config/.esphome/build/sonoffth10_1/.pioenvs/sonoffth10_1/firmware.bin
 ```
+### APC UPS
+On rpiX (special adapter usb-ups cabel is required):
+```bash
+sudo apt install apcupsd
+apcaccess status
+```
